@@ -1,0 +1,100 @@
+# -*- coding: utf-8 -*-
+# ---
+# ExpressionTree
+# ---
+expression_tree:
+  # operators
+  unary_operators: ['id', 'inv', 'pow2', 'pow3', 'sqrt', 'exp', 'log', 'sin', 'cos', 'tan', 'atan', 'abs']
+  unary_unnormalized_probs: [10, 10, 5, 1, 1, 2, 1, 2, 2, 1, 1, 2]
+  binary_operators: ['add', 'mul', 'sub']
+  binary_unnormalized_probs: [6, 3, 1]
+  # symbols
+  symbol_t_prob: 0
+  max_xdim: 6
+  # constant general
+  constant_range_l: -1
+  constant_range_u: 1
+  constant_integer_prob: 0.5
+  constant_loguniform: false
+  constant_include_negative: true # for loguniform
+  # multiplicative constant
+  constant_mul_range_l: 0.05
+  constant_mul_range_u: 5
+  constant_mul_integer_prob: 0.5
+  constant_mul_loguniform: true
+  constant_mul_include_negative: true
+  # additive constant
+  constant_add_range_l: -5
+  constant_add_range_u: 5
+  constant_add_integer_prob: 0.5
+  constant_add_loguniform: false
+  constant_add_include_negative: true
+  # expression
+  avoid_nesting_unary_operators: true
+  max_subtree_depth: 5 # unary subtree
+  constant_mul_prob: 0.5
+  constant_add_prob: 0.3
+  min_num_unary_operators: 0
+  max_num_unary_operators: 5
+  min_num_binary_operators: 1
+  max_num_binary_operators: 5
+
+# ---
+# ExpressionGenerator
+# ---
+expression_generator:
+  num_subexpression_candidates: 1
+  # subexpression candidate
+  min_subtree_depth: 2
+  max_subtree_depth: 4 
+  bias_types: ['subexpression', 'symbol', 'permute', 'constant', 'independent']
+  bias_type_unnormalized_probs: [3, 1, 1, 1, 6]
+  simplify_timeout_sec: 1
+  simplify_all: true
+  # global multiplicative constant
+  constant_mul_global_prob: 0.5
+  constant_add_global_prob: 0.
+  constant_mul_global_range_l: 0.1
+  constant_mul_global_range_u: 10
+  constant_mul_global_integer_prob: 0.
+  constant_mul_global_loguniform: false
+  constant_mul_global_include_negative: true
+  # global additive constant
+  constant_add_global_range_l: 0
+  constant_add_global_range_u: 0
+  constant_add_global_integer_prob: 0.
+  constant_add_global_loguniform: false
+  constant_add_global_include_negative: true
+
+# ---
+# DatasetGenerator
+# ---
+dataset_generator:
+  # ODE sequence
+  max_sequence_len_per_dim: 30
+  # initial condition
+  x0_range_line_inner: 2
+  x0_range_line_outer: 5
+  x0_range_traj: 1
+  # integration
+  x_range: 50
+  max_line_length: 5
+  min_num_pts_traj: 50
+  max_num_pts_traj: 200
+  num_pts_line: 5
+  traj_time_range_l: 0
+  traj_time_range_u: 1
+  line_time_duration: 0.01
+  check_converge_traj_value: 0.001
+  discard_converge_traj_prob: 0.9
+  traj_timeout_sec: 1
+  num_lines: 200
+  num_lines_inner_ratio: 0.4
+  min_num_trajs: 1
+  max_num_trajs: 5
+  num_attempts_line_factor: 2
+  num_attempts_traj_factor: 10
+  solver_options: {'method': 'LSODA', 'min_step': 0.0000000001, 'first_step': 0.000001}
+  gen_data_timeout_sec: 3
+  
+  
